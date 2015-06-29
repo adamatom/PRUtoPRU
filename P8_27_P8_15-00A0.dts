@@ -1,0 +1,35 @@
+/dts-v1/;
+/plugin/;
+
+/{
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+    part_number = "P8_15_TO_PRU0_TO_PRU1_TO_P8_27";
+
+    exclusive-use =
+        "P8.15",
+        "P8.27",
+        "pr1_pru0_pru_r31_15",
+        "pr1_pru1_pru_r30_8";
+
+    fragment@0 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bs_pinmode: pinmux_bs_pinmode {
+                pinctrl-single,pins = <0x03c 0x2e 0x0e0 0xd>;
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&ocp>;
+        __overlay__ {
+            bs_pinmode_pinmux {
+                compatible = "bone-pinmux-helper";
+                status = "okay";
+                pinctrl-names = "default";
+                pinctrl-0 = <&bs_pinmode>;
+            };
+        };
+    };
+};
+
